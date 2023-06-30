@@ -15,5 +15,5 @@ $ flatpak install org.electronjs.Electron2.BaseApp
 
 4. Build and install
 ```bash
-$  flatpak run org.flatpak.Builder --user --install --force-clean build us.zoom.Zoom.json
+$  flatpak run org.flatpak.Builder --force-clean --install build us.zoom.Zoom.json
 ```
