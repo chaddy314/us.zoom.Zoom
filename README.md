@@ -1,7 +1,21 @@
-1. Install `flatpak builder`
+1. Install `flatpak-builder`
+
+- Suse:
 ```bash
-$ flatpak install flathub org.flatpak.Builder
+$ sudo zypper in flatpak-builder
 ```
+
+
+- Debian/Ubuntu:
+```bash
+$ sudo apt in flatpak-builder
+```
+
+- Arch
+```bash
+$ sudo yay -S flatpak-builder
+```
+
 
 2. Clone repository
 ```bash
@@ -15,5 +29,5 @@ $ flatpak install org.electronjs.Electron2.BaseApp
 
 4. Build and install
 ```bash
-$  flatpak run org.flatpak.Builder --force-clean --install build us.zoom.Zoom.json
+$  sudo flatpak-builder --force-clean --install  build us.zoom.Zoom.json
 ```
