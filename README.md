@@ -13,7 +13,7 @@ $ sudo apt in flatpak-builder
 
 - Arch
 ```bash
-$ sudo yay -S flatpak-builder
+$ sudo pacman -S flatpak-builder
 ```
 
 
