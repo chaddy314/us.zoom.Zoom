@@ -1,0 +1,315 @@
+{
+  "id" : "org.electronjs.Electron2.BaseApp",
+  "branch" : "22.08",
+  "runtime" : "org.freedesktop.Platform",
+  "runtime-version" : "22.08",
+  "runtime-commit" : "289b339fd2050a03e90dd05b937b7b2320ad343eb8389a6e1eb6e87cfdb88e1e",
+  "sdk" : "org.freedesktop.Sdk",
+  "sdk-commit" : "eb311882bf5bd302aa2c32ef8701dd7f3dfcb171d448eb001fd7bc43ce42f2d3",
+  "modules" : [
+    {
+      "name" : "dbus-glib",
+      "config-opts" : [
+        "--disable-static",
+        "--disable-gtk-doc"
+      ],
+      "sources" : [
+        {
+          "url" : "https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz",
+          "sha256" : "7ce4760cf66c69148f6bd6c92feaabb8812dee30846b24cd0f7395c436d7e825",
+          "type" : "archive"
+        }
+      ],
+      "cleanup" : [
+        "*.la",
+        "/bin",
+        "/etc",
+        "/include",
+        "/libexec",
+        "/share/gtk-doc",
+        "/share/man"
+      ]
+    },
+    {
+      "name" : "libappindicator",
+      "rm-configure" : true,
+      "config-opts" : [
+        "--disable-static",
+        "--disable-gtk-doc",
+        "--disable-tests",
+        "--disable-mono-tests",
+        "--enable-introspection=no",
+        "--with-gtk=3"
+      ],
+      "sources" : [
+        {
+          "url" : "https://launchpad.net/libappindicator/12.10/12.10.0/+download/libappindicator-12.10.0.tar.gz",
+          "sha256" : "d5907c1f98084acf28fd19593cb70672caa0ca1cf82d747ba6f4830d4cc3b49f",
+          "type" : "archive"
+        },
+        {
+          "path" : "libappindicator-ftbfs.patch",
+          "type" : "patch"
+        },
+        {
+          "path" : "libappindicator-no-python.patch",
+          "type" : "patch"
+        },
+        {
+          "path" : "libappindicator-fix-crash-from-incorrect-signal-emission.patch",
+          "type" : "patch"
+        },
+        {
+          "path" : "libappindicator-fix-crash-iterating-icon-themes.patch",
+          "type" : "patch"
+        },
+        {
+          "commands" : [
+            "autoreconf -sfi"
+          ],
+          "dest-filename" : "autogen.sh",
+          "type" : "script"
+        }
+      ],
+      "build-options" : {
+        "cflags" : "-Wno-error"
+      },
+      "cleanup" : [
+        "/include",
+        "/lib/pkgconfig",
+        "/lib/*.la",
+        "/share/gtk-doc",
+        "/share/gir-1.0"
+      ],
+      "modules" : [
+        {
+          "name" : "intltool",
+          "sources" : [
+            {
+              "url" : "https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz",
+              "sha256" : "67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd",
+              "type" : "archive"
+            },
+            {
+              "path" : "intltool-perl5.26-regex-fixes.patch",
+              "type" : "patch"
+            }
+          ],
+          "cleanup" : [
+            "*"
+          ]
+        },
+        {
+          "name" : "dbus-glib-2",
+          "config-opts" : [
+            "--disable-static",
+            "--disable-gtk-doc"
+          ],
+          "sources" : [
+            {
+              "url" : "https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-0.110.tar.gz",
+              "sha256" : "7ce4760cf66c69148f6bd6c92feaabb8812dee30846b24cd0f7395c436d7e825",
+              "type" : "archive"
+            }
+          ],
+          "cleanup" : [
+            "*.la",
+            "/bin",
+            "/etc",
+            "/include",
+            "/libexec",
+            "/share/gtk-doc",
+            "/share/man"
+          ]
+        },
+        {
+          "name" : "libdbusmenu",
+          "config-opts" : [
+            "--disable-static",
+            "--disable-gtk-doc",
+            "--enable-introspection=no",
+            "--disable-vala",
+            "--disable-dumper",
+            "--disable-tests",
+            "--with-gtk=3"
+          ],
+          "sources" : [
+            {
+              "url" : "https://launchpad.net/libdbusmenu/16.04/16.04.0/+download/libdbusmenu-16.04.0.tar.gz",
+              "sha256" : "b9cc4a2acd74509435892823607d966d424bd9ad5d0b00938f27240a1bfa878a",
+              "type" : "archive"
+            }
+          ],
+          "build-options" : {
+            "cflags" : "-Wno-error",
+            "env" : {
+              "HAVE_VALGRIND_FALSE" : "#",
+              "HAVE_VALGRIND_TRUE" : ""
+            }
+          },
+          "cleanup" : [
+            "/include",
+            "/libexec",
+            "/lib/pkgconfig",
+            "/lib/*.la",
+            "/share/doc",
+            "/share/libdbusmenu",
+            "/share/gtk-doc",
+            "/share/gir-1.0"
+          ]
+        },
+        {
+          "name" : "libindicator",
+          "config-opts" : [
+            "--disable-static",
+            "--disable-tests",
+            "--with-gtk=3"
+          ],
+          "sources" : [
+            {
+              "url" : "https://launchpad.net/libindicator/12.10/12.10.1/+download/libindicator-12.10.1.tar.gz",
+              "sha256" : "b2d2e44c10313d5c9cd60db455d520f80b36dc39562df079a3f29495e8f9447f",
+              "type" : "archive"
+            },
+            {
+              "commands" : [
+                "# FTBFS fix",
+                "sed -e '/LIBINDICATOR_LIBS/ s/\\$LIBM/ $LIBM/' -i configure.ac"
+              ],
+              "type" : "shell"
+            },
+            {
+              "commands" : [
+                "autoreconf -sfi"
+              ],
+              "dest-filename" : "autogen.sh",
+              "type" : "script"
+            }
+          ],
+          "build-options" : {
+            "cflags" : "-Wno-error"
+          },
+          "cleanup" : [
+            "/include",
+            "/libexec",
+            "/lib/pkgconfig",
+            "/lib/*.la",
+            "/share/libindicator",
+            "/share/gtk-doc",
+            "/share/gir-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "gconf",
+      "config-opts" : [
+        "--disable-static",
+        "--disable-gtk-doc",
+        "--disable-orbit",
+        "--disable-introspection"
+      ],
+      "sources" : [
+        {
+          "url" : "https://download.gnome.org/sources/GConf/3.2/GConf-3.2.6.tar.xz",
+          "sha256" : "1912b91803ab09a5eed34d364bf09fe3a2a9c96751fde03a4e0cfa51a04d784c",
+          "type" : "archive"
+        }
+      ],
+      "cleanup" : [
+        "/bin",
+        "/libexec",
+        "/share",
+        "/etc"
+      ]
+    },
+    {
+      "name" : "libnotify",
+      "buildsystem" : "meson",
+      "config-opts" : [
+        "-Dtests=false",
+        "-Dintrospection=disabled",
+        "-Dgtk_doc=false",
+        "-Ddocbook_docs=disabled"
+      ],
+      "sources" : [
+        {
+          "url" : "https://download.gnome.org/sources/libnotify/0.7/libnotify-0.7.8.tar.xz",
+          "sha256" : "69209e0b663776a00c7b6c0e560302a8dbf66b2551d55616304f240bba66e18c",
+          "type" : "archive"
+        }
+      ]
+    },
+    {
+      "name" : "gvfs-trash",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "commands" : [
+            "exec rm -r \"$@\""
+          ],
+          "dest-filename" : "gvfs-trash",
+          "type" : "script"
+        }
+      ],
+      "build-commands" : [
+        "install -m755 gvfs-trash /app/bin/gvfs-trash"
+      ]
+    },
+    {
+      "name" : "libgnome-keyring",
+      "rm-configure" : true,
+      "config-opts" : [
+        "--disable-static",
+        "--disable-gtk-doc",
+        "--disable-coverage",
+        "--disable-introspection"
+      ],
+      "sources" : [
+        {
+          "url" : "https://download.gnome.org/sources/libgnome-keyring/3.12/libgnome-keyring-3.12.0.tar.xz",
+          "sha256" : "c4c178fbb05f72acc484d22ddb0568f7532c409b0a13e06513ff54b91e947783",
+          "type" : "archive"
+        },
+        {
+          "commands" : [
+            "autoreconf -vfi"
+          ],
+          "dest-filename" : "autogen.sh",
+          "type" : "script"
+        }
+      ]
+    },
+    {
+      "name" : "zypak",
+      "sources" : [
+        {
+          "url" : "https://github.com/refi64/zypak",
+          "commit" : "55a60d110301e8dd37b631503c3524ab7baaf7aa",
+          "x-checker-data" : {
+            "type" : "git",
+            "tag-pattern" : "^v([\\d.]+)$"
+          },
+          "type" : "git"
+        }
+      ]
+    }
+  ],
+  "cleanup" : [
+    "/include",
+    "/lib/pkgconfig",
+    "/man",
+    "/share/aclocal",
+    "/share/devhelp",
+    "/share/gir-1.0",
+    "/share/gtk-doc",
+    "/share/man",
+    "/share/pkgconfig",
+    "/share/vala",
+    "/lib/systemd",
+    "*.la",
+    "*.a"
+  ],
+  "separate-locales" : false,
+  "tags" : []
+}

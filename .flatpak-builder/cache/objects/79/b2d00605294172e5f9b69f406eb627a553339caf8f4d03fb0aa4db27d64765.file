@@ -1,0 +1,5 @@
+[Runtime]
+name=us.zoom.Zoom.Debug
+
+[ExtensionOf]
+ref=app/us.zoom.Zoom/x86_64/master

@@ -1,0 +1,34 @@
+[Application]
+name=us.zoom.Zoom
+runtime=org.freedesktop.Platform/x86_64/22.08
+sdk=org.freedesktop.Sdk/x86_64/22.08
+base=app/org.electronjs.Electron2.BaseApp/x86_64/22.08
+tags=proprietary;
+command=zoom
+
+[Context]
+shared=network;ipc;
+sockets=x11;wayland;pulseaudio;
+devices=all;
+filesystems=~/Documents/Zoom:create;~/.zoom:create;
+
+[Session Bus Policy]
+org.kde.*=own
+org.freedesktop.ScreenSaver=talk
+
+[Environment]
+QT_QPA_PLATFORM=
+
+[Extra Data]
+name=zoom.tar.xz
+checksum=0494e07509aef1182447a314c8e8f7958dc3a7c8d50c320d6e4a2b7aee583318
+size=177327616
+uri=https://cdn.zoom.us/prod/5.15.2.4260/zoom_x86_64.tar.xz
+
+[Extension us.zoom.Zoom.Debug]
+directory=lib/debug
+autodelete=true
+no-autodownload=true
+
+[Build]
+built-extensions=us.zoom.Zoom.Debug;

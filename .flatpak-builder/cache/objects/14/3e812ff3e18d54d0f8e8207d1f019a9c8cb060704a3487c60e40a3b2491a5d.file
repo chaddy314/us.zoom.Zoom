@@ -1,0 +1,141 @@
+{
+  "id" : "us.zoom.Zoom",
+  "runtime" : "org.freedesktop.Platform",
+  "runtime-version" : "22.08",
+  "runtime-commit" : "74b5ae6a53e3f39258f90c664a63ef256097bd77c4229fc11e96bc2dbd2ce0cf",
+  "sdk" : "org.freedesktop.Sdk",
+  "sdk-commit" : "ac3b29f9b04246d2b346de5632914232ee9c511702fc3c4e0d1c125a6de1e3ca",
+  "base" : "org.electronjs.Electron2.BaseApp",
+  "base-version" : "22.08",
+  "base-commit" : "584aac8cf5612d3da40f49f28cb30e5423ecfab93b13ff6f36f1de96aadfb0ca",
+  "command" : "zoom",
+  "modules" : [
+    {
+      "name" : "krb5",
+      "subdir" : "src",
+      "config-opts" : [
+        "--disable-static",
+        "--disable-rpath"
+      ],
+      "sources" : [
+        {
+          "url" : "https://kerberos.org/dist/krb5/1.20/krb5-1.20.1.tar.gz",
+          "sha256" : "704aed49b19eb5a7178b34b2873620ec299db08752d6a8574f95d41879ab8851",
+          "x-checker-data" : {
+            "type" : "anitya",
+            "project-id" : 13287,
+            "stable-only" : true,
+            "url-template" : "https://kerberos.org/dist/krb5/$major.$minor/krb5-$major.$minor.tar.gz"
+          },
+          "type" : "archive"
+        }
+      ],
+      "cleanup" : [
+        "/sbin",
+        "/bin",
+        "/var",
+        "/include",
+        "/lib/pkgconfig",
+        "/share/et",
+        "/share/examples",
+        "/share/man"
+      ]
+    },
+    {
+      "name" : "zoom",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "commands" : [
+            "tar xf zoom.tar.xz --no-same-owner",
+            "rm -f zoom.tar.xz",
+            "mv /app/extra/zoom/zoom /app/extra/zoom/zoom.real",
+            "cp /app/bin/zoom-wrapper.sh /app/extra/zoom/zoom"
+          ],
+          "dest-filename" : "apply_extra",
+          "type" : "script"
+        },
+        {
+          "path" : "zoom.sh",
+          "type" : "file"
+        },
+        {
+          "path" : "zoom-wrapper.sh",
+          "type" : "file"
+        },
+        {
+          "path" : "zoom-ld.so.conf",
+          "type" : "file"
+        },
+        {
+          "path" : "us.zoom.Zoom.appdata.xml",
+          "type" : "file"
+        },
+        {
+          "path" : "us.zoom.Zoom.desktop",
+          "type" : "file"
+        },
+        {
+          "path" : "us.zoom.Zoom.64.png",
+          "type" : "file"
+        },
+        {
+          "path" : "us.zoom.Zoom.96.png",
+          "type" : "file"
+        },
+        {
+          "path" : "us.zoom.Zoom.128.png",
+          "type" : "file"
+        },
+        {
+          "path" : "us.zoom.Zoom.256.png",
+          "type" : "file"
+        },
+        {
+          "only-arches" : [
+            "x86_64"
+          ],
+          "filename" : "zoom.tar.xz",
+          "url" : "https://cdn.zoom.us/prod/5.15.2.4260/zoom_x86_64.tar.xz",
+          "sha256" : "0494e07509aef1182447a314c8e8f7958dc3a7c8d50c320d6e4a2b7aee583318",
+          "size" : 177327616,
+          "x-checker-data" : {
+            "type" : "rotating-url",
+            "url" : "https://zoom.us/client/latest/zoom_x86_64.tar.xz",
+            "pattern" : "https://.*/prod/([^/]+)/zoom_x86_64.tar.xz"
+          },
+          "type" : "extra-data"
+        }
+      ],
+      "build-commands" : [
+        "install -Dm755 apply_extra /app/bin/apply_extra",
+        "install -Dm644 us.zoom.Zoom.desktop /app/share/applications/us.zoom.Zoom.desktop",
+        "install -Dm644 us.zoom.Zoom.appdata.xml /app/share/appdata/us.zoom.Zoom.appdata.xml",
+        "install -Dm644 us.zoom.Zoom.64.png /app/share/icons/hicolor/64x64/apps/us.zoom.Zoom.png",
+        "install -Dm644 us.zoom.Zoom.96.png /app/share/icons/hicolor/96x96/apps/us.zoom.Zoom.png",
+        "install -Dm644 us.zoom.Zoom.128.png /app/share/icons/hicolor/128x128/apps/us.zoom.Zoom.png",
+        "install -Dm644 us.zoom.Zoom.256.png /app/share/icons/hicolor/256x256/apps/us.zoom.Zoom.png",
+        "install -Dm755 zoom.sh /app/bin/zoom",
+        "install -Dm755 zoom-wrapper.sh /app/bin/zoom-wrapper.sh",
+        "install -Dm644 zoom-ld.so.conf /app/etc/ld.so.conf"
+      ]
+    }
+  ],
+  "separate-locales" : false,
+  "finish-args" : [
+    "--share=ipc",
+    "--socket=x11",
+    "--socket=wayland",
+    "--socket=pulseaudio",
+    "--share=network",
+    "--device=all",
+    "--filesystem=~/Documents/Zoom:create",
+    "--filesystem=~/.zoom:create",
+    "--env=QT_QPA_PLATFORM=",
+    "--own-name=org.kde.*",
+    "--talk-name=org.freedesktop.ScreenSaver"
+  ],
+  "tags" : [
+    "proprietary"
+  ]
+}

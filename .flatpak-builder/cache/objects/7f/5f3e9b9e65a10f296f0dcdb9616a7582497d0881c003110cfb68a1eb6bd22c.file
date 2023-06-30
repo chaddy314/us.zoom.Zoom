@@ -1,0 +1,5 @@
+#!/bin/sh
+tar xf zoom.tar.xz --no-same-owner
+rm -f zoom.tar.xz
+mv /app/extra/zoom/zoom /app/extra/zoom/zoom.real
+cp /app/bin/zoom-wrapper.sh /app/extra/zoom/zoom
